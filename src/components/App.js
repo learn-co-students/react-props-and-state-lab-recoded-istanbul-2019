@@ -1,12 +1,10 @@
 import React from 'react'
-
 import Filters from './Filters'
 import PetBrowser from './PetBrowser'
 
 class App extends React.Component {
   constructor() {
     super()
-
     this.state = {
       pets: [],
       filters: {
@@ -14,7 +12,17 @@ class App extends React.Component {
       }
     }
   }
-
+  onAdoptPet=(id)=>{
+    let idd=this.state.pets.findIndex(ppet=>ppet.id==id)
+    this.state.pets[idd].isAdopted=true
+  }
+  onFindPetsClick=()=>{
+    let url="/api/pets"
+    if(this.state.filters.type!="all"){ url=`/api/pets?type=${this.state.filters.type}`}
+    fetch(url)
+    .then(res=>res.json())
+    .then(pets=>this.setState({pets:pets}))
+  }
   render() {
     return (
       <div className="ui container">
@@ -24,10 +32,10 @@ class App extends React.Component {
         <div className="ui container">
           <div className="ui grid">
             <div className="four wide column">
-              <Filters />
+              <Filters onFindPetsClick={this.onFindPetsClick} onChangeType={()=>this.setState({filters:{type:event.target.value}})}/>
             </div>
             <div className="twelve wide column">
-              <PetBrowser />
+              <PetBrowser pets={this.state.pets} onAdoptPet={this.onAdoptPet}/>
             </div>
           </div>
         </div>
