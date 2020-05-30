@@ -18,7 +18,7 @@ describe('<PetBrowser />', () => {
   });
 
   it('should pass an `onAdoptPet` callback prop to its children Pet components', () => {
-    const noop = () => {};
+    const noop = () => { };
     const wrapper = shallow(<PetBrowser pets={ALL_PETS} onAdoptPet={noop} />);
     expect(
       wrapper
