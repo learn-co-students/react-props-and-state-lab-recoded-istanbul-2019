@@ -1,5 +1,4 @@
 import React from 'react'
-
 import Filters from './Filters'
 import PetBrowser from './PetBrowser'
 
@@ -13,7 +12,34 @@ class App extends React.Component {
         type: 'all'
       }
     }
+  onChangeType = (e) =>{
+    this.setState ={
+      filters:{
+        type: e.target.value
+      }
+    }
   }
+    onFindClick= () => {
+      const type =this.state.filter.type 
+      let URL = ''
+      if (type === 'all'){
+        URL += '/api/pets'
+      }
+      else {
+        URL +=  '/api/pets?type=${type}'
+      }
+      fetch(URL)
+      .then(res => res.json())
+      .then(data => this.setState({
+        pets : data
+      }))
+    }
+    onAdobtPet = (id) => {
+      const pets =this.state.petspets [pets.findIndex(e)=>
+      e.id ===id)]isAdopted = true 
+    }
+  }
+
 
   render() {
     return (
